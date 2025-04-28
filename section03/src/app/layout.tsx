@@ -32,3 +32,4 @@ export default function RootLayout({
     </html>
   );
 }
+// children을 props를 통해 layout을 적용
