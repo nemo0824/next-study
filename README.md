@@ -85,3 +85,34 @@ async function 을 이용해 await fetch
 
 데이터 요청은 해당 컴포넌트에서 할수있게됨
 fetching data where it's needed
+
+### 데이터 캐시
+
+fetch 메서드를 이용해 불러온 데이터를 next 서버에 보관하는 기능, 영구적 또는 특정 시간 주기로 갱신
+axios는 불가능 next 에서사용하는 fetch 메서드는 일반적으로 사용하는 fetch와 다름
+
+1. cache: "no-store"
+
+- 데이터 페칭 결과를 저장하지 않는 옵션
+- 캐싱을 아예 하지 않도록 설정하는 옵션
+
+기본값이 no-store
+
+2. cache: "force-cache"
+
+- 요청의 결과를 ㅁ무조건 캐싱함
+- 한번 호출 된 이후에는 다시 호출되지않음
+- 첫 요청시에 캐싱하고, 두번째 요청시부터 캐싱되어있는지 확인하고 캐싱됐으면 요청하지않고 캐싱값사용
+- json형태로 next폴더안에 cache에서 확인할수있음
+
+3. {next:{revalidate:3}}
+
+- 특정 시간을 주기로 캐시를 업데이트함
+- 마치 page Router의 ISR 방식과 유사함
+- 3초 주기로한다는뜻
+- stale 한지 확인하고 최신데이터 fetching
+
+4. {next:{tags:['a']}}
+
+- on-Demand Revalidate
+- 요청이 들어왔을때 데이터를 최신화함

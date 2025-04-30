@@ -4,36 +4,24 @@ import style from "./page.module.css";
 import books from "@/mock/books.json";
 import axios from "axios";
 
-async function getAllBooks(): Promise<BookData[]> {
-  try {
-    const response = await axios(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`)
-    return response.data
-  } catch (err) {
-    console.error(err)
-    return []
-  }
-}
-
 async function AllBooks() {
-  const allBooks = await getAllBooks()
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`, { cache: "no-store" })
+  if (!response.ok) {
+    return <div>오류발생</div>
+  }
+  const allBooks: BookData[] = await response.json()
   return (
     <div>
       {allBooks.map((book) => <BookItem key={book.id} {...book} />)}
     </div>
   )
 }
-async function getRecoBooks(): Promise<BookData[]> {
-  try {
-    const response = await axios(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`)
-    return response.data
-  } catch (err) {
-    console.error(err)
-    return []
-  }
-}
-
 async function RecoBooks() {
-  const recoBooks = await getRecoBooks()
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`, { next: { revalidate: 3 } })
+  if (!response.ok) {
+    return <div>오류발생</div>
+  }
+  const recoBooks: BookData[] = await response.json()
   return (
     <div>
       {recoBooks.map((book) => <BookItem key={book.id} {...book} />)}
