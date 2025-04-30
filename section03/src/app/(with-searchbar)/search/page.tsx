@@ -1,16 +1,18 @@
-import books from "@/mock/books.json";
 import BookItem from "@/app/components/book-item";
+import { BookData } from "@/tytpes";
+import axios from "axios";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: { q?: string }
 }) {
-  const { q } = await searchParams;
 
+  const response = await axios<BookData[]>(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${searchParams.q}`)
+  const searchBooks = response.data
   return (
     <div>
-      {books.map((book) => (
+      {searchBooks.map((book) => (
         <BookItem key={book.id} {...book} />
       ))}
     </div>
