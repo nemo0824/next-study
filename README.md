@@ -61,3 +61,27 @@ next.js 공부
    * RSC payload, js bundle, 까지 가져옴
    * static 한 페이지 - ssg => Rsc payload + js bundle 가져옴
    * dynamic 한 페이지 - ssr => Rsc payload 가져옴 데이터의 업데이트가 향후에 필요할수도있기때문에 rsc payload만 가져온다
+
+### 데이터 페칭
+
+PageRouter
+
+사전렌더링중 함수이용
+
+1. getServerSideProps (ssr)
+2. getStaticProps (ssg)
+3. getStaticPaths (dynamic ssg)
+
+서버컴포넌트가 없어서 모든 컴포넌트가 클라이언트 컴포넌트
+=> 서버와 클라이언트측 둘다 실행됐음
+
+AppRouter
+
+서버컴포넌트 추가되었음
+async function 을 이용해 await fetch
+
+기존 클라이언트 컴포넌트에서는 async 키워드 사용 불가
+: 브라우저에서 동작시 문제를 일으킬수있기때문에 (props전달, memo)
+
+데이터 요청은 해당 컴포넌트에서 할수있게됨
+fetching data where it's needed
