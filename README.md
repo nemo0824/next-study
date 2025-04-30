@@ -31,7 +31,33 @@ next.js 공부
 결론 : 페이지 대부분 서버 컴포넌트로 구성 권장, 클라이언트 컴포넌트는 꼭 필요할 경우만 사용
 
 4. 주의사항 및 규칙
-1. 서버 컴포넌트에는 브라우저에서 실행될 코드가 포함되면 안된다.
-1. 클라이언트 컴포넌트는 클라이언트에서만 실행되지않는다
-1. 클라이언트 컴포넌트에서 서버컴포넌트를 import할수없다 (props로 넘겨줘야함)
-1. 서버컴포넌트에서 클라이언트에게 직렬화 되지 않는 props는 전달불가능하다 (함수는 직렬화 불가능 즉 전다 불가)
+   4-1. 서버 컴포넌트에는 브라우저에서 실행될 코드가 포함되면 안된다.
+   4-2. 클라이언트 컴포넌트는 클라이언트에서만 실행되지않는다
+   4-3. 클라이언트 컴포넌트에서 서버컴포넌트를 import할수없다 (props로 넘겨줘야함)
+   4-4. 서버컴포넌트에서 클라이언트에게 직렬화 되지 않는 props는 전달불가능하다 (함수는 직렬화 불가능 즉 전다 불가)
+
+   ### Navigate
+
+   1. 기존 방식
+      1-1 페이지 이동요청
+      1-2 JS bundle 전달(client component)
+      1-3 JS 실행(컴포넌트교체)
+      1-4 페이지 교체
+
+   2. app router 방식
+      2-1 페이지 이동요청
+      2-2 JS bundle 전달(clint component)
+      2-3 RSC Payload(server component)
+      2-4 JS 실행
+      2-5 페이지 교체
+
+   3. tip
+
+   - useRouter객체 사용시 'next/navigation' 을 import 해야함 , PageRouter와 차이점
+   - prevFetching
+
+   * 개발모드 실행 x 프로덕션 모드 실행 o
+   * 이동할 가능성이있는 페이지를 미리 불러옴
+   * RSC payload, js bundle, 까지 가져옴
+   * static 한 페이지 - ssg => Rsc payload + js bundle 가져옴
+   * dynamic 한 페이지 - ssr => Rsc payload 가져옴 데이터의 업데이트가 향후에 필요할수도있기때문에 rsc payload만 가져온다
