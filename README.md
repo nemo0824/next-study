@@ -36,33 +36,33 @@ next.js 공부
    4-3. 클라이언트 컴포넌트에서 서버컴포넌트를 import할수없다 (props로 넘겨줘야함)
    4-4. 서버컴포넌트에서 클라이언트에게 직렬화 되지 않는 props는 전달불가능하다 (함수는 직렬화 불가능 즉 전다 불가)
 
-   ### Navigate
+### Navigate
 
-   1. 기존 방식
-      1-1 페이지 이동요청
-      1-2 JS bundle 전달(client component)
-      1-3 JS 실행(컴포넌트교체)
-      1-4 페이지 교체
+1.  기존 방식
+    1-1 페이지 이동요청
+    1-2 JS bundle 전달(client component)
+    1-3 JS 실행(컴포넌트교체)
+    1-4 페이지 교체
 
-   2. app router 방식
-      2-1 페이지 이동요청
-      2-2 JS bundle 전달(clint component)
-      2-3 RSC Payload(server component)
-      2-4 JS 실행
-      2-5 페이지 교체
+2.  app router 방식
+    2-1 페이지 이동요청
+    2-2 JS bundle 전달(clint component)
+    2-3 RSC Payload(server component)
+    2-4 JS 실행
+    2-5 페이지 교체
 
-   3. tip
+3.  tip
 
-   - useRouter객체 사용시 'next/navigation' 을 import 해야함 , PageRouter와 차이점
-   - prevFetching
+- useRouter객체 사용시 'next/navigation' 을 import 해야함 , PageRouter와 차이점
+- prevFetching
 
-   * 개발모드 실행 x 프로덕션 모드 실행 o
-   * 이동할 가능성이있는 페이지를 미리 불러옴
-   * RSC payload, js bundle, 까지 가져옴
-   * static 한 페이지 - ssg => Rsc payload + js bundle 가져옴
-   * dynamic 한 페이지 - ssr => Rsc payload 가져옴 데이터의 업데이트가 향후에 필요할수도있기때문에 rsc payload만 가져온다
+* 개발모드 실행 x 프로덕션 모드 실행 o
+* 이동할 가능성이있는 페이지를 미리 불러옴
+* RSC payload, js bundle, 까지 가져옴
+* static 한 페이지 - ssg => Rsc payload + js bundle 가져옴
+* dynamic 한 페이지 - ssr => Rsc payload 가져옴 데이터의 업데이트가 향후에 필요할수도있기때문에 rsc payload만 가져온다
 
-### 데이터 페칭
+### data fetching
 
 PageRouter
 
@@ -86,7 +86,7 @@ async function 을 이용해 await fetch
 데이터 요청은 해당 컴포넌트에서 할수있게됨
 fetching data where it's needed
 
-### 데이터 캐시
+### data cache
 
 fetch 메서드를 이용해 불러온 데이터를 next 서버에 보관하는 기능, 영구적 또는 특정 시간 주기로 갱신
 axios는 불가능 next 에서사용하는 fetch 메서드는 일반적으로 사용하는 fetch와 다름
@@ -116,3 +116,28 @@ axios는 불가능 next 에서사용하는 fetch 메서드는 일반적으로 �
 
 - on-Demand Revalidate
 - 요청이 들어왔을때 데이터를 최신화함
+
+### request Memoization
+
+중복된 api 요청을 하나의 요청으로 합쳐주는것
+데이터 캐시와 다름
+"하나의 페이지를 렌더링 하는 동안"에 중복된 API 요청을 캐싱하기 위해 존재
+렌더링이 종료되면 모든 캐시가 소멸된다
+중복된 api를 줄이는것이 목적임
+
+데이터 캐시
+백엔드 서버로부터 불러온 데이터를 거의 영구적으로 보관하기 위해 사용됨
+서버가동중에는 영구적으로 보관된다
+
+request Memoization vs data cache
+
+흐름
+리퀘스트 메모이제이션 => 데이터 캐시 => 백엔드서버
+
+만약 세번의 요청이있다면
+첫번째 요청시 => 데이터 캐싱하고
+두번째 요청시 => 데이터 캐싱있으니까 요청을 아예하지않고 캐싱함
+세버째 요청시 => 두번쨰 요청과 동일
+
+"그냥 중복요청을 안보내면되는것아닌가? " => 서버 컴포넌트 도입때문
+appRouter는 각 서버 컴포넌트에서 필요로하는데 이터를 요청하게됨
