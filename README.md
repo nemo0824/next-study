@@ -189,3 +189,40 @@ export const dynamic = ''
 브라우저에 저장되는 캐시 페이지 이동을 효율저긍로 진행하기위해 페이지의 일부 데이터를 보관함
 RSC payload 의 리소스를 저장.
 새로고침이나, 브라우저껐다가 키면 다시 reset됨
+
+### streaming
+
+데이터를 조각으로 쪼개서 보내주는것 긴로딩없이 좋은 경험 줄수있음
+스트리밍을 이용하게 되면 일단 뭐라도 빠르게 보여줄수있음
+느리게 렌더링되는 부분은 로딩바 같은 대체 UI를 보여주면된다
+오래걸리는 컴포넌트의 렌더링을 사용자가 좀 더 좋은 환경에서 기다릴 수 있도록
+
+dynamic 페이지에 잘 활용됨
+
+1. loading 컴포넌트는 해당경로의 아래에있는 모든 비동기 페이지 컴포넌트들을 스트리밍으로 설정해줌
+2. async로 설정되어있는 비동기 컴포넌트에만 스트리밍 설정해줌
+3. loading 컴포넌트는 무조건 페이지 컴폰넌트에만 적용 layout, component에서는 불가능함 ==> react suspense적용해야함
+4. 브라우저에서 querystring이 변경될때는 트리거링되지않는다 즉 페이지 변경할때만 되는것임 , queryString이 변경될때는 안됨 ==> react suspense만
+
+react suspense
+리액트의 suspense 최초한번 내부터컴포넌트 완료됐을때 기본저긍로 새로 로딩상태 돌아가지않는데 key값을 이용해서 새로운컴포넌트로 인식할수있도록
+
+### skeleton UI
+
+대략 어떻게 생긴 컴텐츠가 나타겠구나 라고 알려주는 것
+
+스켈레톤 UI를 하기위해서 스켈레톤 component와 style을 설정해주고
+해당 컴포넌트 Suspense에 fallback으로 넣어준다.
+
+### error
+
+에러헨들링은 일단 기존처럼 try,catch방법도있지만
+error component를 만들어서 해당 페이지의 error를 잡게할수있음 client 컴포넌트로 만들것 서버에러든, 클라이언트 에러든 잡을수있도록,
+
+컴포넌트 단위로하고싶다면 기존의 리액트 방식처럼 errorBoundary사용
+
+추가 참고 공부 할것
+
+reset 함수
+router.refresh
+startTransition

@@ -4,9 +4,11 @@ import Image from "next/image";
 
 // export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }]
-}
+
+// 빌드시에 정적으로 페이지만들어서 만들어진 페이지 제공
+// export function generateStaticParams() {
+//   return [{ id: "1" }, { id: "2" }]
+// }
 
 export default async function Page({
   params,
