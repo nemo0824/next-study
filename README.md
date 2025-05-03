@@ -140,4 +140,52 @@ request Memoization vs data cache
 세버째 요청시 => 두번쨰 요청과 동일
 
 "그냥 중복요청을 안보내면되는것아닌가? " => 서버 컴포넌트 도입때문
-appRouter는 각 서버 컴포넌트에서 필요로하는데 이터를 요청하게됨
+appRouter는 각 서버 컴포넌트에서 필요로하는데 이터를 요청하게됨 그렇게되면 각 컴포넌트가 동일한 api를 요청할수도있음
+
+### full Route cache
+
+next 서버측에서 빌드 타임에 특정 페이지의 렌더링 결과를 캐싱하는 기능.
+
+- 서버컴포넌트만 해당
+  dynamic
+  static
+
+* dynamic page로 설정되는 기준
+
+1. 캐시되지 않는 data fetching을 사용할경우
+2. 동적함수(쿠키, 헤더, 쿼리스트링)을 사용하는 컴포넌트가 있을때
+
+- static page로 설정되는기준
+
+1. dynamic에 포함되지않을때
+
+동적함수 데이터캐시 페이지분류
+y n dynamic
+y y dynamic
+n n dynamic
+n y static
+
+next 서버 ===> 백엔드 서버
+풀라우트캐시, 렌더링(사전), 리퀘스트메모이제이션, 데이터캐시
+
+revalidate로 stale 한것을 다시 불러올수있음
+
+suspense를 이용해서 client component 묶고 fallback 설정.
+비동기작업이후에 suspense 내부요소 렌더링
+빌드타임에서 클라이언트컴포넌트 제외됨
+
+### Route segment options
+
+export const dynamic = ''
+특정 페이지 유형을 강제로 static, dynamic 페이지로 설정
+
+1.  auto : 기본값, 아무것도 강제하지 않음
+2.  force-dynamic : 페이지를 강제로 dynamic 페이지로 설정
+3.  force-static : 페이지를 강제로 static 페이지로 설정
+4.  error : 페이지를 강제로 static 페이지로 설정(설정하면 안되는 이유 -> 빌드 오류)
+
+### clint router cache
+
+브라우저에 저장되는 캐시 페이지 이동을 효율저긍로 진행하기위해 페이지의 일부 데이터를 보관함
+RSC payload 의 리소스를 저장.
+새로고침이나, 브라우저껐다가 키면 다시 reset됨

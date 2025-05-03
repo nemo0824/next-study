@@ -1,14 +1,27 @@
-import axios from "axios";
+import { NotFound } from "@/app/NotFound";
 import style from "./page.module.css";
-import { BookData } from "@/tytpes";
+import Image from "next/image";
+
+// export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }]
+}
 
 export default async function Page({
   params,
 }: {
-  params: { id: string | string[] };
+  params: Promise<{ id: string | string[] }>;
 }) {
-  const response = await axios<BookData>(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${params.id}`)
-  const detailBook = response.data
+  const { id } = await params
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`)
+  if (!response.ok) {
+    if (response.status === 404) {
+      return <NotFound />
+    }
+    return <div> 오류가발생했습니다</div>
+  }
+  const detailBook = await response.json()
   const { title, subTitle, description, author, publisher, coverImgUrl } = detailBook;
 
   return (

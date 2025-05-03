@@ -1,23 +1,43 @@
-"use client"
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
 
-export const Searchbar = () => {
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import style from "./searchbar.module.css";
+
+export default function SearchBar() {
   const router = useRouter();
-  const [search, setSearch] = useState("")
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState("");
 
-  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => (
-    setSearch(e.target.value)
-  )
+  const q = searchParams.get("q");
+
+  useEffect(() => {
+    setSearch(q || "");
+  }, [q]);
+
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   const onSubmit = () => {
-    router.push(`/search?q=${search}`)
-  }
+    if (!search || q === search) return;
+    router.push(`/search?q=${search}`);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
 
   return (
-    <div>
-      <input value={search} onChange={onChangeSearch} />
+    <div className={style.container}>
+      <input
+        value={search}
+        onChange={onChangeSearch}
+        onKeyDown={onKeyDown}
+      />
       <button onClick={onSubmit}>검색</button>
     </div>
-  )
+  );
 }
