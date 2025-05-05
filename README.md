@@ -226,3 +226,39 @@ error component를 만들어서 해당 페이지의 error를 잡게할수있음 
 reset 함수
 router.refresh
 startTransition
+
+## server action
+
+브라우저에서 호출할 수 있는 서버에서 실행되는 비동기 함수
+
+클라이언트 컴포넌트로 구성하고 api로 호출하지않고 server action 사용하는이유?
+=> 코드가 간결
+=> 단순한 기능일때
+=> 보안성 민감하거나 중요한 데이터 다룰떄
+
+revalidatePath
+정보들을 해당 경로에있는걸 다시가져옴
+server 컴포넌트에서만 사용할수있으며
+기존의 풀라우트 캐시, 데이터 캐시들이 삭제됨 purge
+풀라우트 캐시 다시 업데이트되지않음
+데이터 캐시 업데이트됨
+
+무조건 최신의데이터를 가져오기위함임
+
+next 에서 재검증
+
+1. 특정 주소의 해당되는 페이지만 재검증
+   revalidate(api주소)
+
+2. 특정 경로의 모든 동적 페이지를 재검증
+   revalidate("폴더, 파일 경로(브라우저 주소경로가아님)", "page")
+   revalidate('/book/[id]', "page")
+
+3. 특정 레이아웃을 갖는 모든 페이지 재검증
+   revalidate('/(with-searchbar)', "layout")
+
+4. 모든 데이터 재검증
+   revalidate("/", "layout")
+
+5. 태그 기준, 데이터 캐시 재검증
+   revalidateTag("tag")
