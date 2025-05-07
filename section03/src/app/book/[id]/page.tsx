@@ -2,9 +2,10 @@ import { NotFound } from "@/app/NotFound";
 import style from "./page.module.css";
 import Image from "next/image";
 import { createReviewAction } from "@/actions/create-review.action";
-import { ReviewData } from "@/types";
+import { BookData, ReviewData } from "@/types";
 import ReviewItem from "@/app/components/review-item";
 import { ReviewEditor } from "@/app/components/review-editor";
+import { title } from "process";
 // export const dynamicParams = false;
 
 
@@ -12,6 +13,23 @@ import { ReviewEditor } from "@/app/components/review-editor";
 // export function generateStaticParams() {
 //   return [{ id: "1" }, { id: "2" }]
 // }
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`)
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  const book: BookData = await response.json()
+  return {
+    title: `${book.title}`,
+    description: `${book.description}`,
+    openGraph: {
+      title: `${book.title}`,
+      description: `${book.description}`,
+    }
+
+  }
+}
 
 async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`)
@@ -23,6 +41,7 @@ async function BookDetail({ bookId }: { bookId: string }) {
   }
   const detailBook = await response.json()
   const { title, subTitle, description, author, publisher, coverImgUrl } = detailBook;
+
 
   return (
     <section>

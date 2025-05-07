@@ -4,6 +4,8 @@ import { delay } from "@/util/delay";
 import { Suspense } from "react";
 import Loading from "./loading";
 import BookListSkeleton from "@/app/components/skeleton/book-list-skeleton";
+import { title } from "process";
+import { Metadata } from "next";
 
 async function SearchResult({ q }: { q: string }) {
   await delay(1500)
@@ -25,6 +27,19 @@ async function SearchResult({ q }: { q: string }) {
   );
 }
 
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
+  // 현재 페이지의 메타 데이터를 동적으로 생성하는 역할을 함
+  const { q } = await searchParams
+
+  return {
+    title: `${q}: 한입북스 검색`,
+    description: `${q}: 한입북스 결과`,
+    openGraph: {
+      title: `${q}: 한입북스 검색`,
+      description: `${q}: 한입북스 결과`,
+    }
+  }
+}
 export default function Page({
   searchParams,
 }: {
