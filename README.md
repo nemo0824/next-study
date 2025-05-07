@@ -262,3 +262,14 @@ next 에서 재검증
 
 5. 태그 기준, 데이터 캐시 재검증
    revalidateTag("tag")
+
+### Parallel
+
+여러개의 콘텐츠를 병렬(slot)로 렌더하고
+url로 각각 제어할수있는 appRouter
+모달, 탭, 분할 레이아웃 부분만 바뀌는 ui적합
+
+### Image 최적화
+
+next.js image 최적화
+Image 태그사용,
