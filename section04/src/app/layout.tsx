@@ -1,11 +1,11 @@
-import "./globals.css";
-
-export default function RootLayout({}: Readonly<{
+export default function RootLayout({
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body></body>
+      <body cz-shortcut-listen="true">{children}</body>
     </html>
   );
 }
