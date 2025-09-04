@@ -12,7 +12,7 @@ interface LocationInfo {
 
 export const LocationContainer = () => {
   const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
-
+  // test
   return (
     <div>
       <LocationBtn onLocationUpdate={setLocationInfo} />
