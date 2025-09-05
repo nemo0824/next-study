@@ -1,7 +1,9 @@
-export default function LoginPage() {
+import { LoginContainer } from "./components/LoginContainer";
+
+export default async function LoginPage() {
   return (
     <>
-      <button>관리자 로그인</button>
+      <LoginContainer />
     </>
   );
 }
