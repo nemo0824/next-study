@@ -9,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body cz-shortcut-listen="true" className="min-h-screen">
+      <body cz-shortcut-listen="true" className="min-h-screen ">
         <MantineProvider forceColorScheme="light">{children}</MantineProvider>
       </body>
     </html>
