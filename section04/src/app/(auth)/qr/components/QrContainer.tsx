@@ -24,7 +24,19 @@ export interface LectureQrForm {
 export const QrContainer = () => {
   const [tab, setTab] = useState(0);
   const tabsName = ["Qr설정", "위치설정", "폼 설정"];
-  const [qrForm, setQrForm] = useState({} as LectureQrForm);
+  const [qrForm, setQrForm] = useState<LectureQrForm>({
+    qrRefreshInterval: 30,
+    formSubmitLimit: 3,
+    validRadius: 100,
+    lectureLocation: {
+      latitude: 37.5665,
+      longitude: 126.978,
+    },
+    qrForm: {
+      name: "",
+      phone: 0,
+    },
+  });
 
   const onClickTab = (index: number) => {
     setTab(index);
