@@ -12,6 +12,7 @@
     "@mantinex/mantine-logo": "^2.0.0",
     "@tabler/icons-react": "^3.34.1",
     "next": "15.3.4",
+    "postcss-preset-mantine": "^1.18.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
