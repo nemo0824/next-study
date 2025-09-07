@@ -64,7 +64,12 @@ export const QrContainer = () => {
           />
         );
       case 1:
-        return <LocationSetting />;
+        return (
+          <LocationSetting
+            validRadius={qrForm.validRadius}
+            onChange={onChange}
+          />
+        );
       case 2:
         return <FormSetting />;
     }

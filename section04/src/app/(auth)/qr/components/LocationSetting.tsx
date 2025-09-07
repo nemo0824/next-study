@@ -1,5 +1,23 @@
 import React from "react";
+import { ValidDistance } from "./locationSetting/validDistance";
+import { LectureQrForm } from "./QrContainer";
 
-export const LocationSetting = () => {
-  return <div>LocationSetting</div>;
+interface LocationSettingProps {
+  validRadius: number;
+  onChange: (
+    lecture: Partial<
+      Pick<
+        LectureQrForm,
+        "qrRefreshInterval" | "formSubmitLimit" | "validRadius"
+      >
+    >
+  ) => void;
+}
+
+export const LocationSetting = ({ validRadius, onChange }: LocationSettingProps) => {
+  return (
+    <div>
+      <ValidDistance validRadius={validRadius} onChange={onChange} />
+    </div>
+  );
 };
