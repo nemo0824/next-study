@@ -55,7 +55,7 @@ export const QrPreview = ({ refreshInterval = 30 }: QrPreviewProps) => {
             )}
           </div>
         </div>
-        <div className="ml-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <Button
             onClick={() => !preQrCode && setPrevQrCode(true)}
             styles={{

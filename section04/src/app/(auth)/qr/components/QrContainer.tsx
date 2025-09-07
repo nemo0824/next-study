@@ -77,7 +77,6 @@ export const QrContainer = () => {
           const isSelected = tab === index;
           return (
             <Button
-              size="md"
               onClick={() => onClickTab(index)}
               key={index}
               styles={{
