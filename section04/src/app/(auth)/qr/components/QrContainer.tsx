@@ -15,12 +15,17 @@ export interface LectureQrForm {
     latitude: number;
     longitude: number;
   };
-  qrForm: {
-    name: string;
-    phone: number;
-    [key: string]: string | number | undefined;
-  };
+  qrFormList: { field: string; required: boolean }[];
 }
+
+const DEFAULT_FORM_FIELDS = [
+  { field: "이름", required: true },
+  { field: "연락처", required: true },
+  { field: "소속", required: false },
+  { field: "주소", required: false },
+  { field: "전공", required: false },
+] as const;
+
 export const QrContainer = () => {
   const [tab, setTab] = useState(0);
   const tabsName = ["Qr설정", "위치설정", "폼 설정"];
@@ -32,14 +37,18 @@ export const QrContainer = () => {
       latitude: 37.5665,
       longitude: 126.978,
     },
-    qrForm: {
-      name: "",
-      phone: 0,
-    },
+    qrFormList: [...DEFAULT_FORM_FIELDS],
   });
 
   const onClickTab = (index: number) => {
     setTab(index);
+  };
+
+  const onDeleteFormField = (fieldName: string) => {
+    const newFormField = qrForm.qrFormList.filter(
+      (form) => form.field !== fieldName
+    );
+    setQrForm((prev) => ({ ...prev, qrFormList: newFormField }));
   };
 
   const onChange = (
@@ -71,7 +80,12 @@ export const QrContainer = () => {
           />
         );
       case 2:
-        return <FormSetting />;
+        return (
+          <FormSetting
+            qrFormList={qrForm.qrFormList}
+            onDeleteFormField={onDeleteFormField}
+          />
+        );
     }
   };
 
