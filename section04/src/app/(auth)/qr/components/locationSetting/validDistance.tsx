@@ -23,7 +23,7 @@ export const ValidDistance = ({
   };
 
   return (
-    <div className="bg-[#F1F1F1] w-full p-8 rounded-lg">
+    <div className="bg-[#F1F1F1] w-full p-8 rounded-lg border-1 border-[#D8D8D8]">
       <h3 className="my-4 font-bold">유효 반경 설정</h3>
       <span className="my-4 font-bold text-[#1251D4]">{validRadius}</span>
       <span>m</span>
@@ -41,6 +41,9 @@ export const ValidDistance = ({
           { value: 300, label: "300m" },
         ]}
         styles={{
+          track: {
+            backgroundColor: "#D8D8D8",
+          },
           bar: {
             backgroundColor: "#1251D4",
           },

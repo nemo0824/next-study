@@ -13,7 +13,7 @@ export const FormInput = ({
   onDeleteFormField,
 }: FormName) => {
   return (
-    <div className="bg-white rounded-lg flex justify-between items-center p-3">
+    <div className="bg-white rounded-lg flex justify-between items-center p-3 border-1 border-[#D8D8D8]">
       <div className="flex items-center gap-4">
         <span className="w-14">{formName}</span>
         {required && (

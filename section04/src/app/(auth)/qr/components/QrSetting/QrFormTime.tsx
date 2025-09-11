@@ -33,7 +33,7 @@ export const QrFormTime = ({
 
   return (
     <>
-      <div className="bg-[#F1F1F1] w-1/2 p-8 rounded-lg">
+      <div className="bg-[#F1F1F1] w-1/2 p-8 rounded-lg border-1 border-[#D8D8D8]">
         <h2 className="font-bold text-2xl">{title}</h2>
         <Flex gap="sm" mt="xl">
           {times.map((time, i) => {

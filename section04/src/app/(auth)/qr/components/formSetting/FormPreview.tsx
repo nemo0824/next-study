@@ -9,9 +9,9 @@ export const FormPreview = ({
   qrFormList: { field: string; required: boolean }[];
 }) => {
   return (
-    <div className="bg-[#F1F1F1] w-1/2 p-8 rounded-lg">
+    <div className="bg-[#F1F1F1] w-1/2 p-8 rounded-lg border-1 border-[#D8D8D8]">
       <h3 className="font-bold">폼 미리보기</h3>
-      <div className="bg-white p-4 rounded-lg mt-4">
+      <div className="bg-white p-4 rounded-lg mt-4 border-1 border-[#D8D8D8]">
         <h3 className="font-bold">출석 확인</h3>
         <Flex gap={8} direction={"column"} mt={8}>
           {qrFormList.map((form, index) => (

@@ -37,7 +37,7 @@ export const QrPreview = ({ refreshInterval = 30 }: QrPreviewProps) => {
   }, [isAutoRefresh, refreshInterval, preQrCode]);
 
   return (
-    <div className="bg-[#F1F1F1] w-full p-8 rounded-lg">
+    <div className="bg-[#F1F1F1] w-full p-8 rounded-lg border-1 border-[#D8D8D8]">
       <h3 className="mb-4">ex) QR코드 미리보기</h3>
       <Flex justify={"space-between"}>
         <div className="bg-white w-64 h-64 p-4  rounded-lg border border-[#1251D4]">
@@ -45,7 +45,7 @@ export const QrPreview = ({ refreshInterval = 30 }: QrPreviewProps) => {
             {preQrCode ? (
               <Image
                 key={qrKey}
-                src="/qr/lfinQr.png"
+                src={qrKey === 0 ? "/qr/lfinQr.png" : "/qr/checkhere.png"}
                 alt="QR Code"
                 width={200}
                 height={200}
