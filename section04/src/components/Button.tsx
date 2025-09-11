@@ -11,6 +11,7 @@ export const Button = ({
   styles,
   size,
   radius,
+  icon,
 }: {
   children: string | ReactNode;
   onClick?: () => void;
@@ -20,6 +21,7 @@ export const Button = ({
   styles?: Partial<Record<ButtonStylesNames, React.CSSProperties>>;
   size?: MantineSize;
   radius?: MantineRadius | number;
+  icon?: ReactNode;
 }) => {
   return (
     <MaBtn
@@ -31,6 +33,7 @@ export const Button = ({
       size={size}
       radius={radius}
     >
+      {icon}
       {children}
     </MaBtn>
   );

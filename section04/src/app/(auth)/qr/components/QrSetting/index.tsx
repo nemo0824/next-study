@@ -2,7 +2,8 @@ import React from "react";
 import { QrFormTime } from "./QrFormTime";
 import { LectureQrForm } from "../QrContainer";
 import { QrPreview } from "./QrPreview";
-
+import { Button } from "@/components/Button";
+import { Flex } from "@mantine/core";
 interface QrSetting {
   qrRefreshInterval: number;
   formSubmitLimit: number;
@@ -14,12 +15,14 @@ interface QrSetting {
       >
     >
   ) => void;
+  onClickNext: () => void;
 }
 
 export const QrSetting = ({
   qrRefreshInterval,
   formSubmitLimit,
   onChange,
+  onClickNext,
 }: QrSetting) => {
   const QR_UPDATE_TIMES = [30, 60, 90];
   const FORM_VALID_TIME = [3, 5, 10];
@@ -49,6 +52,19 @@ export const QrSetting = ({
       <div className="mt-10">
         <QrPreview refreshInterval={qrRefreshInterval} />
       </div>
+      <Flex className="mt-4">
+        <Button
+          onClick={onClickNext}
+          styles={{
+            root: {
+              background: "#1251D4",
+              color: "white",
+            },
+          }}
+        >
+          다음
+        </Button>
+      </Flex>
     </div>
   );
 };

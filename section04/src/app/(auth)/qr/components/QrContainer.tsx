@@ -3,9 +3,10 @@
 import { Button } from "@/components/Button";
 import React, { useState } from "react";
 import { QrSetting } from "./QrSetting";
-import { LocationSetting } from "./LocationSetting";
-import { FormSetting } from "./FormSetting";
+import { LocationSetting } from "./locationSetting";
+import { FormSetting } from "./formSetting";
 import { Group } from "@mantine/core";
+import { DEFAULT_FORM_FIELDS } from "@/constants/qr";
 
 export interface LectureQrForm {
   qrRefreshInterval: number;
@@ -15,12 +16,9 @@ export interface LectureQrForm {
     latitude: number;
     longitude: number;
   };
-  qrForm: {
-    name: string;
-    phone: number;
-    [key: string]: string | number | undefined;
-  };
+  qrFormList: { field: string; required: boolean }[];
 }
+
 export const QrContainer = () => {
   const [tab, setTab] = useState(0);
   const tabsName = ["Qr설정", "위치설정", "폼 설정"];
@@ -32,14 +30,22 @@ export const QrContainer = () => {
       latitude: 37.5665,
       longitude: 126.978,
     },
-    qrForm: {
-      name: "",
-      phone: 0,
-    },
+    qrFormList: [...DEFAULT_FORM_FIELDS],
   });
 
   const onClickTab = (index: number) => {
     setTab(index);
+  };
+
+  const onDeleteFormField = (fieldName: string) => {
+    if (fieldName === "이름" || fieldName === "연락처") {
+      alert("이름, 연락처 항목은 삭제가 불가능합니다.");
+      return;
+    }
+    const newFormField = qrForm.qrFormList.filter(
+      (form) => form.field !== fieldName
+    );
+    setQrForm((prev) => ({ ...prev, qrFormList: newFormField }));
   };
 
   const onChange = (
@@ -53,6 +59,13 @@ export const QrContainer = () => {
     setQrForm((prev) => ({ ...prev, ...lectureElment }));
   };
 
+  const onClickNext = () => {
+    setTab((prev) => prev + 1);
+  };
+  const onClickPrev = () => {
+    setTab((prev) => prev - 1);
+  };
+
   const renderTabContent = () => {
     switch (tab) {
       case 0:
@@ -61,6 +74,7 @@ export const QrContainer = () => {
             qrRefreshInterval={qrForm.qrRefreshInterval}
             formSubmitLimit={qrForm.formSubmitLimit}
             onChange={onChange}
+            onClickNext={onClickNext}
           />
         );
       case 1:
@@ -68,10 +82,18 @@ export const QrContainer = () => {
           <LocationSetting
             validRadius={qrForm.validRadius}
             onChange={onChange}
+            onClickNext={onClickNext}
+            onClickPrev={onClickPrev}
           />
         );
       case 2:
-        return <FormSetting />;
+        return (
+          <FormSetting
+            qrFormList={qrForm.qrFormList}
+            onDeleteFormField={onDeleteFormField}
+            onClickPrev={onClickPrev}
+          />
+        );
     }
   };
 
