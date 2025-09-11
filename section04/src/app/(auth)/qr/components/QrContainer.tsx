@@ -69,6 +69,13 @@ export const QrContainer = () => {
     setQrForm((prev) => ({ ...prev, ...lectureElment }));
   };
 
+  const onClickNext = () => {
+    setTab((prev) => prev + 1);
+  };
+  const onClickPrev = () => {
+    setTab((prev) => prev - 1);
+  };
+
   const renderTabContent = () => {
     switch (tab) {
       case 0:
@@ -77,6 +84,7 @@ export const QrContainer = () => {
             qrRefreshInterval={qrForm.qrRefreshInterval}
             formSubmitLimit={qrForm.formSubmitLimit}
             onChange={onChange}
+            onClickNext={onClickNext}
           />
         );
       case 1:
@@ -84,6 +92,8 @@ export const QrContainer = () => {
           <LocationSetting
             validRadius={qrForm.validRadius}
             onChange={onChange}
+            onClickNext={onClickNext}
+            onClickPrev={onClickPrev}
           />
         );
       case 2:
@@ -91,6 +101,7 @@ export const QrContainer = () => {
           <FormSetting
             qrFormList={qrForm.qrFormList}
             onDeleteFormField={onDeleteFormField}
+            onClickPrev={onClickPrev}
           />
         );
     }
