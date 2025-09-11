@@ -6,6 +6,7 @@ import { QrSetting } from "./QrSetting";
 import { LocationSetting } from "./locationSetting";
 import { FormSetting } from "./formSetting";
 import { Group } from "@mantine/core";
+import { DEFAULT_FORM_FIELDS } from "@/constants/qr";
 
 export interface LectureQrForm {
   qrRefreshInterval: number;
@@ -17,14 +18,6 @@ export interface LectureQrForm {
   };
   qrFormList: { field: string; required: boolean }[];
 }
-
-const DEFAULT_FORM_FIELDS = [
-  { field: "이름", required: true },
-  { field: "연락처", required: true },
-  { field: "소속", required: false },
-  { field: "주소", required: false },
-  { field: "전공", required: false },
-] as const;
 
 export const QrContainer = () => {
   const [tab, setTab] = useState(0);
@@ -45,11 +38,8 @@ export const QrContainer = () => {
   };
 
   const onDeleteFormField = (fieldName: string) => {
-    const field = qrForm.qrFormList.find(
-      (qrForm) => qrForm.field === fieldName
-    );
-    if (field?.required) {
-      alert("필수 항목은 삭제가 불가능합니다.");
+    if (fieldName === "이름" || fieldName === "연락처") {
+      alert("이름, 연락처 항목은 삭제가 불가능합니다.");
       return;
     }
     const newFormField = qrForm.qrFormList.filter(
