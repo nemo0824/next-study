@@ -1,5 +1,7 @@
 import React from "react";
-import { FormSelect } from "./formSetting/FormSelect";
+import { FormSelect } from "./FormSelect";
+import { FormPreview } from "./FormPreview";
+import { Flex } from "@mantine/core";
 
 export const FormSetting = ({
   qrFormList,
@@ -9,11 +11,12 @@ export const FormSetting = ({
   onDeleteFormField: (fieldName: string) => void;
 }) => {
   return (
-    <>
+    <Flex gap={16}>
       <FormSelect
         qrFormList={qrFormList}
         onDeleteFormField={onDeleteFormField}
       />
-    </>
+      <FormPreview qrFormList={qrFormList} />
+    </Flex>
   );
 };

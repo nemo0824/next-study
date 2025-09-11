@@ -3,8 +3,8 @@
 import { Button } from "@/components/Button";
 import React, { useState } from "react";
 import { QrSetting } from "./QrSetting";
-import { LocationSetting } from "./LocationSetting";
-import { FormSetting } from "./FormSetting";
+import { LocationSetting } from "./locationSetting";
+import { FormSetting } from "./formSetting";
 import { Group } from "@mantine/core";
 
 export interface LectureQrForm {
@@ -45,6 +45,13 @@ export const QrContainer = () => {
   };
 
   const onDeleteFormField = (fieldName: string) => {
+    const field = qrForm.qrFormList.find(
+      (qrForm) => qrForm.field === fieldName
+    );
+    if (field?.required) {
+      alert("필수 항목은 삭제가 불가능합니다.");
+      return;
+    }
     const newFormField = qrForm.qrFormList.filter(
       (form) => form.field !== fieldName
     );

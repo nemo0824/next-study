@@ -1,6 +1,6 @@
 import React from "react";
-import { ValidDistance } from "./locationSetting/validDistance";
-import { LectureQrForm } from "./QrContainer";
+import { ValidDistance } from "./validDistance";
+import { LectureQrForm } from "../QrContainer";
 
 interface LocationSettingProps {
   validRadius: number;
@@ -14,7 +14,10 @@ interface LocationSettingProps {
   ) => void;
 }
 
-export const LocationSetting = ({ validRadius, onChange }: LocationSettingProps) => {
+export const LocationSetting = ({
+  validRadius,
+  onChange,
+}: LocationSettingProps) => {
   return (
     <div>
       <ValidDistance validRadius={validRadius} onChange={onChange} />

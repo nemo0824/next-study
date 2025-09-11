@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Chip } from "@mantine/core";
+import { Button } from "@mantine/core";
 
 interface FormName {
   formName: string;
@@ -13,14 +13,26 @@ export const FormInput = ({
   onDeleteFormField,
 }: FormName) => {
   return (
-    <div className="bg-white rounded-lg flex justify-between">
-      <span>{formName}</span>
-      {required && (
-        <Chip color="red" variant="filled" defaultChecked>
-          필수
-        </Chip>
-      )}
-      <Button onClick={() => onDeleteFormField(formName)}>삭제</Button>
+    <div className="bg-white rounded-lg flex justify-between items-center p-3">
+      <div className="flex items-center gap-4">
+        <span className="w-14">{formName}</span>
+        {required && (
+          <div className="bg-red-500 text-white text-xs rounded-sm px-3">
+            필수
+          </div>
+        )}
+      </div>
+      <Button
+        onClick={() => onDeleteFormField(formName)}
+        styles={{
+          root: {
+            background: "transparent",
+            color: "red",
+          },
+        }}
+      >
+        삭제
+      </Button>
     </div>
   );
 };
