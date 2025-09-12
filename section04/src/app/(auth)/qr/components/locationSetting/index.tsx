@@ -3,6 +3,7 @@ import { ValidDistance } from "./validDistance";
 import { LectureQrForm } from "../QrContainer";
 import { Button } from "@/components/Button";
 import { Flex } from "@mantine/core";
+import { Map } from "./Map";
 
 interface LocationSettingProps {
   validRadius: number;
@@ -27,6 +28,7 @@ export const LocationSetting = ({
   return (
     <>
       <ValidDistance validRadius={validRadius} onChange={onChange} />
+      <Map />
       <Flex
         className="mt-4 gap-4
       "
