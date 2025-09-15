@@ -10,6 +10,17 @@ export const useNaverMap = () => {
   const mapRef = useRef<naver.maps.Map | null>(null);
 
   useEffect(() => {
+    let isMounted = true; // cleanup 시 비동기 작업 취소용
+
+    // 이미 로드된 스크립트가 있는지 확인
+    const existingScript = document.querySelector(
+      'script[src*="oapi.map.naver.com"]'
+    );
+    if (existingScript) {
+      console.log("네이버 지도 스크립트 이미 로드됨");
+      return;
+    }
+
     // IP 기반 위치 정보 가져오기
     const getIPLocation = async () => {
       try {
@@ -36,11 +47,17 @@ export const useNaverMap = () => {
     script.async = true;
 
     script.onload = async () => {
+      if (!isMounted) return; // 컴포넌트가 언마운트되었으면 중단
+
       // 스크립트 로드 완료 후 잠시 대기
       setTimeout(async () => {
+        if (!isMounted) return; // 다시 한 번 확인
+
         // IP 기반 위치 정보 가져오기
         const ipLocation = await getIPLocation();
         console.log("IP 위치:", ipLocation);
+
+        if (!isMounted) return; // 비동기 작업 후 확인
 
         const map = new window.naver.maps.Map("map", {
           center: new window.naver.maps.LatLng(ipLocation.lat, ipLocation.lng),
@@ -63,10 +80,24 @@ export const useNaverMap = () => {
       }, 100);
     };
 
+    script.onerror = () => {
+      console.log("네이버 지도 스크립트 로드 실패");
+    };
+
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      isMounted = false; // 비동기 작업 취소
+      try {
+        const scriptToRemove = document.querySelector(
+          'script[src*="oapi.map.naver.com"]'
+        );
+        if (scriptToRemove && scriptToRemove.parentNode) {
+          scriptToRemove.parentNode.removeChild(scriptToRemove);
+        }
+      } catch (error) {
+        console.log("스크립트 제거 중 오류:", error);
+      }
     };
   }, []);
 
