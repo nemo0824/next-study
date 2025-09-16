@@ -8,7 +8,7 @@ export const LoginContainer = () => {
   const router = useRouter();
   const onClickLogin = (isAdmin: boolean) => {
     window.sessionStorage.setItem("loginType", isAdmin ? "admin" : "user");
-    router.push("/qr");
+    router.push("/register");
   };
   return (
     <div className="flex gap-4">
