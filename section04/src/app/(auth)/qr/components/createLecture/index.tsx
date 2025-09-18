@@ -3,6 +3,7 @@ import { Input, Radio } from "@mantine/core";
 import React from "react";
 
 export const index = () => {
+  // const testStash = "test Stash";
   return (
     <div>
       <label>강의명</label>
