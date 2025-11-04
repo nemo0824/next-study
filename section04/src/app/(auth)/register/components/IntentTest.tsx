@@ -26,7 +26,7 @@ export default function IntentTest() {
       /iPad|iPhone|iPod/.test(userAgent) &&
       !(window as WindowWithMSStream).MSStream
     ) {
-      intentUrl = "App-Prefs:root=General";
+      intentUrl = "prefs:root=General";
       osSpecificText = 'ios 팝업에서 "열기"를 누르세요';
     }
 
