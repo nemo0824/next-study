@@ -18,7 +18,8 @@ export default function IntentTest() {
 
     // Android 감지 및 Intent 실행
     if (/android/i.test(userAgent)) {
-      intentUrl = "intent://android.settings.WIFI_SETTINGS";
+      intentUrl =
+        "intent://settings#Intent;action=android.settings.SETTINGS;end";
       osSpecificText = "안드로이드 설정 앱으로 이동";
     }
     // iOS 감지 및 URL Scheme 실행
