@@ -16,13 +16,12 @@ export default function IntentTest() {
     let intentUrl = "";
     let osSpecificText = "";
 
-    // Android 감지 및 Intent 실행
+    // android
     if (/android/i.test(userAgent)) {
-      intentUrl =
-        "intent://settings#Intent;action=android.settings.SETTINGS;end";
+      intentUrl = "intent:#Intent;action=android.settings.SETTINGS;end";
       osSpecificText = "안드로이드 설정 앱으로 이동";
     }
-    // iOS 감지 및 URL Scheme 실행
+    // iOS
     else if (
       /iPad|iPhone|iPod/.test(userAgent) &&
       !(window as WindowWithMSStream).MSStream
@@ -34,11 +33,9 @@ export default function IntentTest() {
     if (intentUrl) {
       setUrl(intentUrl);
       setOsText(osSpecificText);
-
-      // 자동 실행 시도
+      //자동으로 이동
       window.location.href = intentUrl;
-
-      // 500ms 후 Fallback 표시
+      // fallback
       setTimeout(() => {
         setShowFallback(true);
       }, 500);
